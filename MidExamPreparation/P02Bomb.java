@@ -15,15 +15,20 @@ public class P02Bomb {
         int sappersRow = -1;
         int sappersCol = -1;
 
+        boolean isFound = false;
         for (int i = 0; i < bombField.length; i++) {
             for (int j = 0; j < bombField[i].length; j++) {
                 if (bombField[i][j].equals("s")) {
                     sappersRow = i;
                     sappersCol = j;
+                    isFound = true;
                     break;
                 }
             }
-         }
+            if (isFound) {
+                break;
+            }
+        }
         int countBombs = findCountBombs(bombField);
 
         int bombsFound = 0;
@@ -53,16 +58,15 @@ public class P02Bomb {
                     break;
             }
 
-                    String currentPosition = bombField[sappersRow][sappersCol];
-                    if (currentPosition.equals("B")) {
+                    if (bombField[sappersRow][sappersCol].equals("B")) {
                         System.out.println("You found a bomb!");
                         bombsFound++;
-                        currentPosition = "+";
+                        bombField[sappersRow][sappersCol] = "+";
                         if (countBombs == bombsFound) {
                             System.out.println("Congratulations! You found all bombs!");
                             return;
                         }
-                    } else if (currentPosition.equals("e")) {
+                    } else if (bombField[sappersRow][sappersCol].equals("e")) {
                         System.out.printf("END! %d bombs left on the field%n", countBombs - bombsFound);
                         return;
                     }
